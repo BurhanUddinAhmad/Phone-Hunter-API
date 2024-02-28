@@ -1,4 +1,4 @@
-const loadPhone = async (searchText, isShowAll) => {
+const loadPhone = async (searchText='13', isShowAll) => {
     const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`);
     const data = await res.json();
     const phones = data.data;
@@ -18,13 +18,13 @@ const displayPhones = (phones, isShowAll) => {
     } else {
       showAllContainer.classList.add('hidden');
     }
-    console.log("is show all", isShowAll);
+    // console.log("is show all", isShowAll);
     // display only first 12 phones if not show All
     if(!isShowAll){
       phones = phones.slice(0,12)
     } 
     phones.forEach(phone => {
-        console.log(phone);
+        // console.log(phone);
         // 2. create div
         const phoneCard = document.createElement('div');
         phoneCard.classList = `card w-96 bg-gray-100 shadow-md pt-5`;
@@ -49,11 +49,29 @@ const displayPhones = (phones, isShowAll) => {
 
 // Handle show detail modal
 const handleShowDetail = async(id) => {
-  console.log('hoice', id);
+  // console.log('hoice', id);
   // Load single phone data 
   const res = await fetch(` https://openapi.programming-hero.com/api/phone/${id}`);
   const data = await res.json();
-  console.log(data);
+  const phone = data.data;
+  showPhoneDetails(phone);
+}
+
+const showPhoneDetails = (phone) => {
+console.log(phone);
+// Show detail container 
+const showdetailContainer = document.getElementById('show-detail-modal');
+showdetailContainer.innerHTML = `
+<img class="mx-auto" src="${phone.image}" >
+<h2>${phone.name}</h2>
+<p>It is a long established fact that a reader will be distracted by 
+the readable content of a page when looking at its layout.</p>
+<p><span>Storage: </span>${phone.mainFeatures.storage}</p>
+
+`;
+
+  // Show modal
+  show_details_modal.showModal()
 }
 
 // Handle search button 
@@ -78,4 +96,4 @@ const toggleLoadingSpinner = (isLoading) => {
 const handleShowAll = () => {
   handleSearch(true);
 }
-// loadPhone();
+loadPhone();
