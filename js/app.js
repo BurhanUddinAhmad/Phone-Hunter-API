@@ -3,8 +3,7 @@ const loadPhone = async (searchText) => {
     const data = await res.json();
     const phones = data.data;
     // console.log(phones);
-    displayPhones(phones)
-
+    displayPhones(phones);
 }
 
 const displayPhones = phones => {
@@ -12,6 +11,17 @@ const displayPhones = phones => {
     const phoneContainer = document.getElementById('phone-container');
     phoneContainer.textContent = ``;
     
+    // Display show all button if 
+    const showAllContainer = document.getElementById('show-all-container');
+    if (phones.length > 12) {
+      showAllContainer.classList.remove('hidden');
+    } else {
+      showAllContainer.classList.add('hidden');
+    }
+
+    // display only first 12 phones 
+    phones = phones.slice(0,12)
+
     phones.forEach(phone => {
         console.log(phone);
         // 2. create div
@@ -31,13 +41,27 @@ const displayPhones = phones => {
         // 4. append child 
         phoneContainer.appendChild(phoneCard);
     });
+
+    // hide loading spinner 
+    toggleLoadingSpinner(false);
 }
 
 // Handle search button 
 const handleSearch = () => {
+  toggleLoadingSpinner(true);
   const searchField = document.getElementById('serch-field');
   const searchText = searchField.value;
   console.log(searchText);
   loadPhone(searchText);
 }
+
+const toggleLoadingSpinner = (isLoading) => {
+  const loadingSpinner = document.getElementById('loading-spinner');
+  if(isLoading){
+    loadingSpinner.classList.remove('hidden');
+  } else {
+    loadingSpinner.classList.add('hidden');
+  }
+}
+
 // loadPhone();
