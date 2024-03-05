@@ -49,7 +49,6 @@ const displayPhones = (phones, isShowAll) => {
 
 // Handle show detail modal
 const handleShowDetail = async(id) => {
-  // console.log('hoice', id);
   // Load single phone data 
   const res = await fetch(` https://openapi.programming-hero.com/api/phone/${id}`);
   const data = await res.json();
@@ -63,10 +62,16 @@ console.log(phone);
 const showdetailContainer = document.getElementById('show-detail-modal');
 showdetailContainer.innerHTML = `
 <img class="mx-auto" src="${phone.image}" >
-<h2>${phone.name}</h2>
-<p>It is a long established fact that a reader will be distracted by 
+<h2 class="text-2xl font-bold my-2">${phone.name}</h2>
+<p class="text-gray-600">It is a long established fact that a reader will be distracted by 
 the readable content of a page when looking at its layout.</p>
-<p><span>Storage: </span>${phone.mainFeatures.storage}</p>
+<p class="text-gray-600"><span class="font-bold">Storage: </span>${phone.mainFeatures.storage}</p>
+<p class="text-gray-600"><span class="font-bold">Display Size: </span>${phone.mainFeatures.displaySize}</p>
+<p class="text-gray-600"><span class="font-bold">Chipset: </span>${phone.mainFeatures.chipSet}</p>
+<p class="text-gray-600"><span class="font-bold">Memory: </span>${phone.mainFeatures.memory}</p>
+<p class="text-gray-600"><span class="font-bold">Slug: </span>${phone.slug}</p>
+<p class="text-gray-600"><span class="font-bold">Release Date: </span>${phone.releaseDate}</p>
+<p class="text-gray-600"><span class="font-bold">Brand: </span>${phone.brand}</p>
 
 `;
 
